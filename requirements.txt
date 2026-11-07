@@ -1,0 +1,37 @@
+# MARK 12 - AI Personal Life Assistant Dependencies
+# Core Backend & API
+fastapi>=0.100.0
+uvicorn[standard]>=0.23.0
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+python-multipart>=0.0.6
+websockets>=11.0.3
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+
+# Database & Storage
+SQLAlchemy>=2.0.0
+chromadb>=0.4.0
+
+# System Automation & Telemetry
+psutil>=5.9.0
+pyautogui>=0.9.54
+Pillow>=9.5.0
+requests>=2.31.0
+
+# AI, NLP & Speech
+openai>=1.0.0
+google-generativeai>=0.3.0
+edge-tts>=6.1.9
+pyttsx3>=2.90
+SpeechRecognition>=3.10.0
+
+# Document & Vision Processing
+PyMuPDF>=1.23.0
+python-docx>=0.8.11
+opencv-python-headless>=4.8.0
+
+# Testing & Utilities
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+python-dotenv>=1.0.0

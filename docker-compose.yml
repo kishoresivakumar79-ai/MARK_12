@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  mark-12:
+    build: .
+    container_name: mark_12_assistant
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./storage:/app/storage
+      - ./database:/app/database
+      - ./logs:/app/logs
+    env_file:
+      - .env
+    restart: unless-stopped

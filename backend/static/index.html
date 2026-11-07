@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MARK 12 – AI Personal Life Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Three.js for 3D Holographic Core -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="sci-fi-theme">
+  <!-- Ambient Scanlines & Holographic Vignette -->
+  <div class="hologram-overlay"></div>
+  <div class="grid-backdrop"></div>
+
+  <!-- Main HUD Layout Grid -->
+  <div class="hud-container">
+    <!-- Top System Header Bar -->
+    <header class="hud-header">
+      <div class="brand">
+        <div class="reactor-mini-core"></div>
+        <div class="brand-text">
+          <h1>MARK 12</h1>
+          <span class="version-tag">SYSTEM OS v2.4 // QUANTUM CORE</span>
+        </div>
+      </div>
+
+      <!-- Live Telemetry Stream -->
+      <div class="system-telemetry-bar">
+        <div class="telemetry-pill">
+          <span class="pill-label">CPU</span>
+          <span class="pill-value" id="hud-cpu">12%</span>
+        </div>
+        <div class="telemetry-pill">
+          <span class="pill-label">RAM</span>
+          <span class="pill-value" id="hud-ram">38%</span>
+        </div>
+        <div class="telemetry-pill">
+          <span class="pill-label">AGENTS</span>
+          <span class="pill-value online-glow" id="hud-agents">7 ONLINE</span>
+        </div>
+        <div class="telemetry-pill">
+          <span class="pill-label">STATUS</span>
+          <span class="pill-value status-active" id="hud-status">OPERATIONAL</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Center Stage Workspace -->
+    <div class="hud-body">
+      <!-- Left Navigation Bar -->
+      <nav class="hud-sidebar">
+        <button class="nav-item active" data-tab="dashboard">
+          <span class="nav-icon">⬡</span>
+          <span class="nav-label">COMMAND CENTER</span>
+        </button>
+        <button class="nav-item" data-tab="chat">
+          <span class="nav-icon">◈</span>
+          <span class="nav-label">AI CONVERSATION</span>
+        </button>
+        <button class="nav-item" data-tab="agents">
+          <span class="nav-icon">❖</span>
+          <span class="nav-label">MULTI-AGENT GRAPH</span>
+        </button>
+        <button class="nav-item" data-tab="tasks">
+          <span class="nav-icon">▤</span>
+          <span class="nav-label">TASK PRIORITY QUEUE</span>
+        </button>
+        <button class="nav-item" data-tab="memory">
+          <span class="nav-icon">◎</span>
+          <span class="nav-label">SEMANTIC MEMORY</span>
+        </button>
+        <button class="nav-item" data-tab="documents">
+          <span class="nav-icon">📄</span>
+          <span class="nav-label">DOCUMENT INTEL</span>
+        </button>
+        <button class="nav-item" data-tab="vision">
+          <span class="nav-icon">👁</span>
+          <span class="nav-label">COMPUTER VISION</span>
+        </button>
+        <button class="nav-item" data-tab="automation">
+          <span class="nav-icon">⚙</span>
+          <span class="nav-label">AUTOMATION SUITE</span>
+        </button>
+      </nav>
+
+      <!-- Center Main Interactive Display -->
+      <main class="hud-content">
+        <!-- TAB 1: COMMAND CENTER / DASHBOARD -->
+        <section id="tab-dashboard" class="hud-section active">
+          <div class="dashboard-grid">
+            <!-- 3D Holographic Arc Reactor Core Card -->
+            <div class="hud-card arc-reactor-card">
+              <div class="card-header">
+                <h3>NEURAL CORE 3D VISUALIZER</h3>
+                <span class="badge-pulse">ONLINE</span>
+              </div>
+              <div class="reactor-canvas-wrap">
+                <canvas id="three-core-canvas"></canvas>
+                <div class="reactor-stats-overlay">
+                  <div>QUANTUM BRAIN: <span class="cyan">ACTIVE</span></div>
+                  <div>VOICE SYNTHESIS: <span class="cyan">READY</span></div>
+                  <div>SECURITY PROTOCOL: <span class="green">ENFORCED</span></div>
+                </div>
+              </div>
+              <div class="voice-trigger-bar">
+                <button id="btn-voice-toggle" class="btn-primary-voice">
+                  <span class="mic-icon">🎙</span>
+                  <span id="voice-btn-text">INITIALIZE VOICE PROTOCOL</span>
+                </button>
+                <span id="voice-status-indicator" class="voice-status">Awaiting voice command...</span>
+              </div>
+            </div>
+
+            <!-- Quick Action Command Matrix -->
+            <div class="hud-card quick-commands-card">
+              <div class="card-header">
+                <h3>QUICK DESKTOP DIRECTIVES</h3>
+              </div>
+              <div class="action-btn-grid">
+                <button class="action-btn" onclick="executeQuickAction('launch', 'notepad')">
+                  <span class="icon">📝</span> Open Notepad
+                </button>
+                <button class="action-btn" onclick="executeQuickAction('launch', 'calculator')">
+                  <span class="icon">🔢</span> Open Calculator
+                </button>
+                <button class="action-btn" onclick="executeQuickAction('launch', 'browser')">
+                  <span class="icon">🌐</span> Open Browser
+                </button>
+                <button class="action-btn" onclick="executeQuickAction('screenshot', 'screen')">
+                  <span class="icon">📸</span> Capture Screen
+                </button>
+                <button class="action-btn" onclick="executeQuickAction('status', 'system')">
+                  <span class="icon">📊</span> Diagnostics
+                </button>
+                <button class="action-btn" onclick="executeQuickWorkflow()">
+                  <span class="icon">⚡</span> Run Multi-Agent
+                </button>
+              </div>
+            </div>
+
+            <!-- System Telemetry Overview -->
+            <div class="hud-card telemetry-card">
+              <div class="card-header">
+                <h3>HARDWARE & RUNTIME METRICS</h3>
+              </div>
+              <div class="metrics-list" id="hardware-metrics-list">
+                <div class="metric-row"><span>HOST OS</span><strong id="metric-os">Loading...</strong></div>
+                <div class="metric-row"><span>CPU UTILIZATION</span><strong id="metric-cpu">Loading...</strong></div>
+                <div class="metric-row"><span>RAM CONSUMPTION</span><strong id="metric-ram">Loading...</strong></div>
+                <div class="metric-row"><span>UPTIME</span><strong id="metric-uptime">Loading...</strong></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 2: AI CONVERSATION -->
+        <section id="tab-chat" class="hud-section">
+          <div class="chat-container">
+            <div class="chat-header-info">
+              <div class="ai-status-badge">
+                <span class="pulse-dot"></span>
+                <span>MARK 12 CONVERSATIONAL CORE</span>
+              </div>
+              <div class="voice-feedback-toggle">
+                <label>
+                  <input type="checkbox" id="chk-speech-output" checked>
+                  Spoken Audio Feedback
+                </label>
+              </div>
+            </div>
+
+            <!-- Message Stream -->
+            <div class="chat-history-window" id="chat-stream">
+              <!-- Default Welcome Message -->
+              <div class="message-bubble jarvis-msg">
+                <div class="msg-meta">
+                  <span class="msg-sender">MARK 12</span>
+                  <span class="msg-tag">SYSTEM</span>
+                </div>
+                <div class="msg-text">
+                  Systems online, sir. Voice recognition and multi-agent directives ready. How may I be of assistance?
+                </div>
+              </div>
+            </div>
+
+            <!-- Audio Reactive Waveform Visualizer -->
+            <canvas id="waveform-canvas" height="30"></canvas>
+
+            <!-- Input Bar -->
+            <div class="chat-input-bar">
+              <button class="chat-mic-btn" id="chat-mic-button" title="Speak to MARK 12">🎙</button>
+              <input type="text" id="chat-input" placeholder="Transmit directive or query... (e.g., 'Compare python web frameworks and save to doc')" />
+              <button class="chat-send-btn" id="chat-send-button">TRANSMIT</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 3: MULTI-AGENT GRAPH -->
+        <section id="tab-agents" class="hud-section">
+          <div class="agents-page-grid">
+            <div class="hud-card agent-dag-card">
+              <div class="card-header">
+                <h3>AGENT WORKFLOW GRAPH (DAG)</h3>
+                <span class="badge-cyan">GRAPH TOPOLOGY</span>
+              </div>
+              <div class="dag-visual-container" id="dag-container">
+                <!-- Interactive Graph Nodes -->
+                <div class="dag-node master-planner" id="node-Planner">
+                  <div class="node-title">PLANNER AGENT</div>
+                  <div class="node-role">Orchestrator</div>
+                </div>
+                <div class="dag-children-row">
+                  <div class="dag-node" id="node-Research">
+                    <div class="node-title">RESEARCH</div>
+                    <div class="node-role">Data Discovery</div>
+                  </div>
+                  <div class="dag-node" id="node-Coding">
+                    <div class="node-title">CODING</div>
+                    <div class="node-role">Software Eng</div>
+                  </div>
+                  <div class="dag-node" id="node-Document">
+                    <div class="node-title">DOCUMENT</div>
+                    <div class="node-role">Synthesis</div>
+                  </div>
+                  <div class="dag-node" id="node-Vision">
+                    <div class="node-title">VISION</div>
+                    <div class="node-role">Optical AI</div>
+                  </div>
+                  <div class="dag-node" id="node-Automation">
+                    <div class="node-title">AUTOMATION</div>
+                    <div class="node-role">Desktop Exec</div>
+                  </div>
+                  <div class="dag-node" id="node-Personal">
+                    <div class="node-title">PERSONAL</div>
+                    <div class="node-role">Life Manager</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Multi-Agent Objective Dispatcher -->
+              <div class="workflow-input-wrap">
+                <input type="text" id="workflow-objective-input" placeholder="Enter complex multi-agent goal (e.g., 'Analyze cloud architectures, compare AWS vs Azure, and prepare a summary')" />
+                <button class="btn-primary" onclick="triggerWorkflowExecution()">EXECUTE WORKFLOW</button>
+              </div>
+              <div id="workflow-execution-log" class="workflow-log-box"></div>
+            </div>
+
+            <!-- Agent Roster Panel -->
+            <div class="hud-card agent-roster-card">
+              <div class="card-header">
+                <h3>ACTIVE AGENT ROSTER</h3>
+              </div>
+              <div class="roster-list" id="agent-roster-list">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 4: TASK PRIORITY QUEUE -->
+        <section id="tab-tasks" class="hud-section">
+          <div class="tasks-page-grid">
+            <div class="hud-card task-list-card">
+              <div class="card-header">
+                <h3>PRIORITY QUEUE & TREE SCHEDULER</h3>
+                <div class="task-filter-btns">
+                  <button class="filter-btn active" onclick="loadTasks('priority')">PRIORITY QUEUE</button>
+                  <button class="filter-btn" onclick="loadTasks('tree')">HIERARCHY TREE</button>
+                  <button class="filter-btn" onclick="loadTasks('all')">ALL</button>
+                </div>
+              </div>
+              <div class="task-items-container" id="task-items-list">
+                <!-- Dynamically rendered -->
+              </div>
+            </div>
+
+            <div class="hud-card task-create-card">
+              <div class="card-header">
+                <h3>DISPATCH NEW TASK</h3>
+              </div>
+              <div class="form-group">
+                <label>Task Title</label>
+                <input type="text" id="new-task-title" placeholder="e.g., Review ROS2 navigation controllers" />
+              </div>
+              <div class="form-group">
+                <label>Priority Level</label>
+                <select id="new-task-priority">
+                  <option value="1">Priority 1 - Critical / Urgent</option>
+                  <option value="2">Priority 2 - High</option>
+                  <option value="3" selected>Priority 3 - Medium</option>
+                  <option value="4">Priority 4 - Low</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Description / Specification</label>
+                <textarea id="new-task-desc" rows="3" placeholder="Additional details..."></textarea>
+              </div>
+              <button class="btn-primary" onclick="submitCreateTask()">ENQUEUE TASK</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 5: SEMANTIC MEMORY -->
+        <section id="tab-memory" class="hud-section">
+          <div class="memory-page-grid">
+            <div class="hud-card memory-list-card">
+              <div class="card-header">
+                <h3>PERSISTENT SEMANTIC MEMORIES</h3>
+                <div class="memory-search-bar">
+                  <input type="text" id="memory-search-input" placeholder="Search semantic vectors..." onkeyup="searchMemories(this.value)" />
+                </div>
+              </div>
+              <div class="memory-items-container" id="memory-items-list">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <div class="hud-card memory-create-card">
+              <div class="card-header">
+                <h3>COMMIT TO LONG-TERM MEMORY</h3>
+              </div>
+              <div class="form-group">
+                <label>Category</label>
+                <select id="new-mem-category">
+                  <option value="user_preference">User Preference</option>
+                  <option value="project_fact">Project / Technical Fact</option>
+                  <option value="life_schedule">Personal / Schedule</option>
+                  <option value="system">System Core</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Memory Fact</label>
+                <textarea id="new-mem-content" rows="4" placeholder="e.g., Prefers Python 3.10 and dark HUD neon visualizers."></textarea>
+              </div>
+              <button class="btn-primary" onclick="submitSaveMemory()">SAVE FACT TO MEMORY</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 6: DOCUMENT INTEL -->
+        <section id="tab-documents" class="hud-section">
+          <div class="docs-page-grid">
+            <div class="hud-card doc-upload-card">
+              <div class="card-header">
+                <h3>DOCUMENT INGESTION (PDF / DOCX / TXT)</h3>
+              </div>
+              <div class="drop-zone" id="doc-drop-zone">
+                <p>Drag & Drop or Click to Ingest Document</p>
+                <input type="file" id="doc-file-input" style="display:none;" accept=".pdf,.docx,.doc,.txt,.md,.py,.json">
+                <button class="btn-secondary" onclick="document.getElementById('doc-file-input').click()">SELECT FILE</button>
+              </div>
+              <div id="doc-upload-status" class="status-msg"></div>
+            </div>
+
+            <div class="hud-card doc-qa-card">
+              <div class="card-header">
+                <h3>GROUNDED DOCUMENT Q&A (RAG)</h3>
+              </div>
+              <div class="form-group">
+                <label>Selected Document</label>
+                <select id="doc-select-active">
+                  <option value="">No document ingested yet</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Ask Question grounded in Document</label>
+                <input type="text" id="doc-question-input" placeholder="What are the key points in this document?" />
+              </div>
+              <button class="btn-primary" onclick="submitDocQA()">QUERY DOCUMENT INTELLIGENCE</button>
+              <div id="doc-qa-result" class="qa-result-box"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 7: COMPUTER VISION -->
+        <section id="tab-vision" class="hud-section">
+          <div class="vision-page-grid">
+            <div class="hud-card vision-upload-card">
+              <div class="card-header">
+                <h3>IMAGE ANALYSIS & OBJECT DETECTION</h3>
+              </div>
+              <div class="drop-zone" id="img-drop-zone">
+                <p>Upload Image for Optical Detection</p>
+                <input type="file" id="img-file-input" style="display:none;" accept="image/*">
+                <button class="btn-secondary" onclick="document.getElementById('img-file-input').click()">SELECT IMAGE</button>
+                <button class="btn-secondary" onclick="captureWebcamSnapshot()">CAMERA SNAPSHOT</button>
+              </div>
+              <div class="vision-preview-area" id="vision-preview">
+                <img id="vision-img-element" style="display:none; max-width:100%; border-radius:8px;" />
+              </div>
+            </div>
+
+            <div class="hud-card vision-results-card">
+              <div class="card-header">
+                <h3>DETECTION TELEMETRY</h3>
+              </div>
+              <div id="vision-results-content" class="vision-results-box">
+                Awaiting visual input...
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 8: AUTOMATION SUITE -->
+        <section id="tab-automation" class="hud-section">
+          <div class="automation-page-grid">
+            <div class="hud-card automation-control-card">
+              <div class="card-header">
+                <h3>AUTHORIZED SYSTEM AUTOMATION</h3>
+                <span class="badge-cyan">WHITELIST VERIFIED</span>
+              </div>
+              <div class="auto-actions-list">
+                <div class="auto-row">
+                  <div>
+                    <strong>Launch Notepad</strong>
+                    <p>Open safe system text editor</p>
+                  </div>
+                  <button class="btn-action" onclick="executeQuickAction('launch', 'notepad')">EXECUTE</button>
+                </div>
+                <div class="auto-row">
+                  <div>
+                    <strong>Launch Calculator</strong>
+                    <p>Open math computation tool</p>
+                  </div>
+                  <button class="btn-action" onclick="executeQuickAction('launch', 'calculator')">EXECUTE</button>
+                </div>
+                <div class="auto-row">
+                  <div>
+                    <strong>Open Web Browser</strong>
+                    <p>Initiate browser session</p>
+                  </div>
+                  <button class="btn-action" onclick="executeQuickAction('launch', 'browser')">EXECUTE</button>
+                </div>
+                <div class="auto-row">
+                  <div>
+                    <strong>Capture Full Screen</strong>
+                    <p>Save visual frame to storage/images</p>
+                  </div>
+                  <button class="btn-action" onclick="executeQuickAction('screenshot', 'screen')">CAPTURE</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="hud-card automation-logs-card">
+              <div class="card-header">
+                <h3>SECURITY & AUDIT TRAIL</h3>
+              </div>
+              <div class="audit-log-stream" id="automation-audit-logs">
+                <!-- Dynamically loaded -->
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
